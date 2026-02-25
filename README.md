@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
+# dartsia-frontend
 
-## Project info
+> Blockchain explorer and network intelligence interface for the [Sia](https://sia.tech) decentralized storage network.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Live at **[dartsia.app](https://dartsia.app)**
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Overview
 
-**Use Lovable**
+`dartsia-frontend` is the React/TypeScript client for the Dartsia platform. It queries the [dartsia-backend](https://github.com/poclus2/dartsia-backend) REST API to render real-time data about the Sia network: blocks, transactions, storage hosts, and network statistics — on both desktop and mobile.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Features
 
-**Use your preferred IDE**
+- **Block Explorer** — paginated list of recent blocks with height, timestamp, transaction count, and fees; per-block detail page with parent hash, included transactions, and miner payouts
+- **Transaction Explorer** — live transaction stream with type classification (transfer, contract formation, contract revision, storage proof, host announcement); filterable and searchable
+- **Host Network** — filterable and sortable host list with status, storage price, capacity, uptime, and software version; per-host detail page with speed gauges, uptime history chart, and contract parameters
+- **Geographic Map** — interactive Leaflet map showing the worldwide distribution of the active host fleet
+- **Global Search** — unified search for blocks (by height or hash), transactions (by ID), and hosts (by public key or network address)
+- **Full Mobile Support** — dedicated bottom navigation, touch-optimized bottom sheets, real-time network status strip
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Tech Stack
 
-Follow these steps:
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + Vite |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| UI Components | shadcn/ui |
+| Data Fetching | TanStack Query |
+| Routing | React Router v6 |
+| Map | React Leaflet |
+| Icons | Lucide React |
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Getting Started
 
-# Step 3: Install the necessary dependencies.
-npm i
+**Requirements:** Node.js 18+
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+# Clone the repository
+git clone https://github.com/poclus2/dartsia-frontend.git
+cd dartsia-frontend
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+# Set VITE_API_URL and VITE_API_KEY in .env
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The dev server will be available at `http://localhost:5173`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Environment Variables
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_URL` | URL of the dartsia-backend API | `http://localhost:3000` |
+| `VITE_API_KEY` | API key for backend authentication | — |
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Docker
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+A production Docker image is built and published automatically via GitHub Actions on every push to `main`.
 
-## How can I deploy this project?
+```bash
+# Build locally
+docker build -f Dockerfile.prod \
+  --build-arg VITE_API_URL=https://your-backend.com \
+  --build-arg VITE_API_KEY=your-key \
+  -t dartsia-frontend .
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+# Run
+docker run -p 80:80 dartsia-frontend
+```
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## Project Structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── api/          # Axios client and API calls
+├── components/   # Shared UI components (layout, mobile, hosts, network...)
+├── hooks/        # TanStack Query hooks (useDartsia, useMobile...)
+├── pages/        # Route-level page components
+└── types/        # TypeScript types for the Dartsia API
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+## Related
+
+- **[dartsia-backend](https://github.com/poclus2/dartsia-backend)** — NestJS API, block ingestion worker, and host scanner
+- **[Sia Foundation](https://sia.tech)** — the Sia protocol and ecosystem
+
+---
+
+## License
+
+MIT
