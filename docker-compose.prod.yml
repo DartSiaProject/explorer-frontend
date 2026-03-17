@@ -2,6 +2,12 @@ version: '3.8'
 
 services:
   frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_API_URL=https://api-explorer.dartsia.app/api
+        - VITE_API_KEY=${VITE_API_KEY:-secret}
     image: ghcr.io/poclus2/dartsia-frontend:latest
     container_name: dartsia-frontend
     restart: unless-stopped
