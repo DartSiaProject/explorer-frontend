@@ -8,7 +8,7 @@ import type {
     NetworkStats
 } from '../types/dartsia';
 
-const API_BASE = '/api/v1/explorer';
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '') + '/explorer';
 
 const apiKey = import.meta.env.VITE_API_KEY || 'secret-key-change-me';
 console.log('Dartsia Client Initialized. API Key:', apiKey ? `${apiKey.substring(0, 5)}...` : 'undefined');
