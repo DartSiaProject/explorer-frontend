@@ -23,7 +23,7 @@ const adaptBlock = (dBlock: DartsiaBlock) => ({
 });
 
 const Index = () => {
-  const { data: blocksData, isLoading: blocksLoading } = useBlocks(1, 20);
+  const { data: blocksData, isLoading: blocksLoading } = useBlocks(1, 40);
   const { data: statsData } = useBlockStats();
   const { data: txsData } = useRecentTxs(15);
   const { data: hostsData } = useHosts();
